@@ -2,36 +2,36 @@ namespace AutomationHackathon23
 {
     public class Tests
     {
-        ChromeDriver ChromeDriver { get; set; }
+        ChromeDriver chrome { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            ChromeDriver = new ChromeDriver();
+            chrome = new ChromeDriver();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ChromeDriver.Quit();
-            ChromeDriver.Dispose();
+            chrome.Quit();
+            chrome.Dispose();
         }
 
         [Test]
         public void Test1()
         {
-            ChromeDriver.Navigate().GoToUrl("http://www.google.com");
+            chrome.Navigate().GoToUrl("http://www.google.com");
 
-            var acceptButton = ChromeDriver.FindElement(By.XPath(".//button[.//div[normalize-space()='Priimti viską']]"));
+            var acceptButton = chrome.FindElement(By.XPath(".//button[.//div[normalize-space()='Priimti viską']]"));
             acceptButton.Click();
 
-            var searchInput = ChromeDriver.FindElement(By.Name("q"));
+            var searchInput = chrome.FindElement(By.Name("q"));
             searchInput.SendKeys("devbridge");
             Thread.Sleep(500);
             searchInput.SendKeys(Keys.Enter);
             Thread.Sleep(500);
 
-            var searchResults = ChromeDriver.FindElements(By.XPath(".//div[@class='g']"));
+            var searchResults = chrome.FindElements(By.XPath(".//div[@class='g']"));
             var searchResult = searchResults[0];
             var link = searchResult.FindElement(By.CssSelector("a"));
 
