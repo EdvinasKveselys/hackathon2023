@@ -20,7 +20,7 @@ namespace AutomationHackathon23
         [Test]
         public void Test1()
         {
-            chrome.Navigate().GoToUrl("http://www.google.com");
+            chrome.Navigate().GoToUrl("http://www.google1.com");
 
             var acceptButton = chrome.FindElement(By.XPath(".//button[.//div[normalize-space()='Priimti viską']]"));
             acceptButton.Click();
