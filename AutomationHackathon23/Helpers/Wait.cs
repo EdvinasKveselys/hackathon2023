@@ -16,7 +16,7 @@ public static class Wait
             {
                 return result;
             }
-// comment
+// comment r
             Thread.Sleep(delayInMilliseconds);
         }
 
