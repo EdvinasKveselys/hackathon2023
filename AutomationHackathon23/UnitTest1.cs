@@ -41,7 +41,7 @@ namespace AutomationHackathon23
                 var checkbox = checkboxes[i];
                 checkbox.Click();
             }
-            
+
             try
             {
                 while (!chrome.FindElement(By.XPath(".//div[@id='results']")).Displayed)
@@ -121,7 +121,7 @@ namespace AutomationHackathon23
             {
                 Thread.Sleep(5000);
             }
-            
+
             Thread.Sleep(5000);
         }
 
@@ -222,15 +222,25 @@ namespace AutomationHackathon23
         {
             chrome.Navigate().GoToUrl("https://ttt-gediminas.onrender.com/local-game");
 
+
             var diff = chrome.FindElement(By.Id("difficulty"));
             diff.Click();
             chrome.WaitForAndReturn(By.XPath(".//option[@value=1]")).Click();
             chrome.FindElement(By.Id("new-game")).Click();
 
-            while (!chrome.FindElement(By.XPath(".//h1[@id='game-caption']")).Text.Contains("wins"))
+            while (true)
             {
+
+                if (chrome.FindElement(By.XPath(".//h1[@id='game-caption']")).Text.Contains("O wins"))
+                {
+                    diff = chrome.FindElement(By.Id("difficulty"));
+                    diff.Click();
+                    chrome.WaitForAndReturn(By.XPath(".//option[@value=1]")).Click();
+                    chrome.FindElement(By.Id("new-game")).Click();
+                }
+
                 var history = chrome.FindElements(By.XPath(".//*[@id='history-table']/tbody/tr"));
-                if (history.Count >= 0 && history.Count%2 != 1)
+                if (history.Count >= 0 && history.Count % 2 != 1)
                 {
                     var cells = chrome.WaitForAndReturnElements(
                         By.XPath(".//td[starts-with(@class, 'cell')][contains(@class, 'enabled')]"));
@@ -238,8 +248,12 @@ namespace AutomationHackathon23
                     var lol = random.Next(cells.Count);
                     cells[lol].Click();
                 }
+                if (chrome.FindElement(By.XPath(".//h1[@id='game-caption']")).Text.Contains("X wins"))
+                {
+                    break;
+                }
             }
-            
+
             Thread.Sleep(5000);
         }
     }
