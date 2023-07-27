@@ -73,5 +73,4 @@ namespace AutomationHackathon23
         {
         }
     }
-    // peliukas Stiuortas Litlisss
 }
