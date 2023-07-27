@@ -1,3 +1,6 @@
+using NUnit.Framework.Constraints;
+using OpenQA.Selenium.Interactions;
+
 using System.Speech.Synthesis;
 
 namespace AutomationHackathon23
@@ -124,6 +127,27 @@ namespace AutomationHackathon23
         [Test]
         public void Task7()
         {
+            chrome.Navigate().GoToUrl("https://ttt-gediminas.onrender.com/local-game");
+
+            var diff = chrome.FindElement(By.Id("difficulty"));
+            diff.Click();
+            chrome.WaitForAndReturn(By.XPath(".//option[@value=1]")).Click();
+            chrome.FindElement(By.Id("new-game")).Click();
+
+            while (!chrome.FindElement(By.XPath(".//h1[@id='game-caption']")).Text.Contains("wins"))
+            {
+                var history = chrome.FindElements(By.XPath(".//*[@id='history-table']/tbody/tr"));
+                if (history.Count >= 0 && history.Count%2 != 1)
+                {
+                    var cells = chrome.WaitForAndReturnElements(
+                        By.XPath(".//td[starts-with(@class, 'cell')][contains(@class, 'enabled')]"));
+                    var random = new Random();
+                    var lol = random.Next(cells.Count);
+                    cells[lol].Click();
+                }
+            }
+            
+            Thread.Sleep(5000);
         }
     }
 }
