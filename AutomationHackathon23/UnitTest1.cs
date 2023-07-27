@@ -51,14 +51,16 @@ namespace AutomationHackathon23
         {
             chrome.Navigate().GoToUrl("https://www.mathster.com/10secondsmaths/");
 
+            var slider = chrome.FindElement(By.XPath(".//div[@class='tooltip']"));
+            new Actions(chrome).ClickAndHold(slider).MoveByOffset(250, 0).Release().Build().Perform();
+
             var checkboxes = chrome.FindElements(By.XPath(".//input[@type='checkbox']"));
             for (int i = 1; i < checkboxes.Count; i++)
             {
                 var checkbox = checkboxes[i];
                 checkbox.Click();
             }
-            var slider = chrome.FindElement(By.XPath(".//div[@class='tooltip']"));
-            new Actions(chrome).ClickAndHold(slider).MoveByOffset(250, 0).Release().Build().Perform();
+            
             try
             {
                 while (!chrome.FindElement(By.XPath(".//div[@id='results']")).Displayed)
